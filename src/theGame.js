@@ -37,11 +37,8 @@ theGame.prototype = {
     // for movement based on the mouse
 
     this.leftRectangle = new Phaser.Rectangle(0, 0, CAMERA_MOVE, this.game.camera.height)
-
     this.rightRectangle = new Phaser.Rectangle(this.game.camera.width - CAMERA_MOVE, 0, CAMERA_MOVE, this.game.camera.height)
-
     this.topRectangle = new Phaser.Rectangle(0, 0, this.game.camera.width, CAMERA_MOVE)
-
     this.bottomRectangle = new Phaser.Rectangle(0, this.game.camera.height - CAMERA_MOVE, this.game.camera.width, CAMERA_MOVE)
   },
 
