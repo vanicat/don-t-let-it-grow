@@ -29,6 +29,10 @@ theGame.prototype = {
     this.tools.addButton('farm', function () {})
     this.tools.addButton('magicshop', function () {})
     this.tools.addButton('search', function () {})
+
+    this.halls = this.game.add.group()
+    this.farms = this.game.add.group()
+    this.magikShops = this.game.add.group()
   },
 
   update: function () {
@@ -36,8 +40,6 @@ theGame.prototype = {
     this.magie.draw()
     this.taint.draw()
     this.plant.draw()
-
-    
 
     // movement based on mouse
     this.moveCamera()
