@@ -1,5 +1,35 @@
 /* global Phaser Range */
-var CAMERA_MOVE = 40
+const CAMERA_MOVE = 40
+
+const BUTTONS_HEIGHT = 68
+const BUTTONS_WIDTH = 320
+
+var ToolBox = function (game, x, y) {
+  this.game = game
+  this.buttonsSpecification = {}
+  this.buttons = {}
+  this.x = x
+  this.y = y
+  this.next_button_y = y
+}
+
+ToolBox.prototype = {
+  addButton: function (name, action) {
+    this.buttonsSpecification[name] = {
+      x: this.x,
+      y: this.next_button_y,
+      name: name,
+      action: action
+    }
+
+    var b = this.buttons[name] = this.game.add.button(this.x, this.next_button_y, name, action, this.game)
+    b.fixedToCamera = true
+    b.cameraOffset.setTo(this.x, this.next_button_y)
+
+    this.next_button_y += BUTTONS_HEIGHT
+  }
+}
+
 var theGame = function (game) {
 }
 
@@ -39,6 +69,12 @@ theGame.prototype = {
     this.rightRectangle = new Phaser.Rectangle(this.game.camera.width - CAMERA_MOVE, 0, CAMERA_MOVE, this.game.camera.height)
     this.topRectangle = new Phaser.Rectangle(0, 0, this.game.camera.width, CAMERA_MOVE)
     this.bottomRectangle = new Phaser.Rectangle(0, this.game.camera.height - CAMERA_MOVE, this.game.camera.width, CAMERA_MOVE)
+
+    this.tools = new ToolBox(this, 32, 128)
+    this.tools.addButton('hall', function () {})
+    this.tools.addButton('farm', function () {})
+    this.tools.addButton('magicshop', function () {})
+    this.tools.addButton('search', function () {})
   },
 
   update: function () {
