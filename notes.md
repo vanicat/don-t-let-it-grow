@@ -33,6 +33,8 @@ on peut
     - magie
     - taint
     - plant
+## TODOs
+- zoom molete
 ## action!
 - loosing time (6AM-9AM) trying to understand phaser 3:
     - should do it between jam!
