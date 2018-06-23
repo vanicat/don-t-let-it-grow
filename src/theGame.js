@@ -1,5 +1,9 @@
+/* global Phaser */
+
 var theGame = function (game) {
 }
+
+var goFullscreen = null
 
 theGame.prototype = {
   preload: function () {
@@ -9,9 +13,16 @@ theGame.prototype = {
     this.magie_usage = 0
     this.magie_available = 0
     this.plant = 0
+
     this.game.add.tileSprite(0, 0, 1920, 1920, 'background')
     this.game.world.setBounds(0, 0, 1920, 1920)
     this.cursors = this.game.input.keyboard.createCursorKeys()
+
+    var game = this.game
+    game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL
+    goFullscreen = function () {
+      game.scale.startFullScreen()
+    }
   },
 
   update: function () {

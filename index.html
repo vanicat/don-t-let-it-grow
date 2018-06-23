@@ -9,7 +9,7 @@
     <script src="src/theGame.js"></script>
     <script>
     var main = function () {
-      var game = new Phaser.Game(900, 900, Phaser.AUTO, 'game', null)
+      var game = new Phaser.Game(window.innerWidth*.9, window.innerHeight*.9, Phaser.AUTO, 'game', null)
       game.state.add('Boot', boot)
       game.state.add('Preload', preload)
       game.state.add('TheGame', theGame)
@@ -24,6 +24,7 @@
   
 </head>
 <body onload="main();">
-    <div id='game'></div>
+    <div name="game"></div>
+    <button onclick='goFullscreen();'>full screen</button>
 </body>
 </html>
