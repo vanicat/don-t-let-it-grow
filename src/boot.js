@@ -18,6 +18,7 @@ boot.prototype = {
     var game = this.game
     game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL
     goFullscreen = function () {
+      // TODO: this should change the size of the view
       game.scale.startFullScreen()
     }
   }
