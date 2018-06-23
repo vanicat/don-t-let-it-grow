@@ -8,7 +8,14 @@ var goFullscreen = null
 
 boot.prototype = {
   preload: function () {
-    this.load.image('loading', 'assets/loading.jpg')
+    this.load.image('loading', 'assets/loading.png')
+
+    var scale = this.game.scale
+    window.onresize = function () {
+      console.log('resize')
+      scale.setGameSize(window.innerWidth * 0.95, window.innerHeight * 0.95)
+      return false
+    }
   },
 
   create: function () {
