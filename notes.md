@@ -23,5 +23,17 @@ on peut
         - soit crée un nouveau plant 
 - technologie ?
     - loi interdiction usage indépandant de la magie
+    - lois sur les réfugiés
+    - amélioration outil divers
+- event
+    - famine
+    - réfugié
     - 
-## 
+## action!
+- loosing time (6AM-9AM) trying to understand phaser 3:
+    - should do it between jam!
+
+
+## tools
+- [easystarjs path finding](https://github.com/prettymuchbryce/easystarjs)
+- phaser !!
