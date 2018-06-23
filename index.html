@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Don't let it grow</title>
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.10.1/dist/phaser.min.js"></script>
-    <script src="src/main.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser-ce@2.10.6"></script>
+    <script src="src/boot.js"></script>
+    <script src="src/preload.js"></script>
+    <script src="src/theGame.js"></script>
+    <script>
+    var main = function () {
+      var game = new Phaser.Game(900, 900, Phaser.AUTO, 'game', null)
+      game.state.add('Boot', boot)
+      game.state.add('Preload', preload)
+      game.state.add('TheGame', theGame)
+      game.state.start('Boot')
+    }
+    </script>
     <style type="text/css">
       body {
       margin: 0;
@@ -12,7 +23,7 @@
     </style>
   
 </head>
-<body>
-    
+<body onload="main();">
+    <div id='game'></div>
 </body>
 </html>
