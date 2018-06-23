@@ -25,14 +25,13 @@ theGame.prototype = {
     this.taint = new Range(0, 2000, this.game)
     this.taint.setText(430, 20, 'taint: ')
     this.taint.setRangePos(80, 10, 32 * 3, 20)
-
     this.taint.hide()
 
     this.plant = new Range(0, 2000, this.game)
     this.plant.setText(600, 20, 'new plant: ')
     this.plant.setRangePos(150, 10, 32 * 3, 20)
-
     this.plant.hide()
+
     // TODO: set position relatively to the window
 
     // for movement based on the mouse
