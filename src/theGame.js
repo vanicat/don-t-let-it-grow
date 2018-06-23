@@ -1,4 +1,4 @@
-/* global Phaser RangeDisplay ToolBox */
+/* global Phaser RangeDisplay NumericDisplay ToolBox */
 const CAMERA_MOVE = 40
 
 var theGame = function (game) {
@@ -37,6 +37,8 @@ theGame.prototype = {
     this.taint.draw()
     this.plant.draw()
 
+    
+
     // movement based on mouse
     this.moveCamera()
   },
@@ -73,12 +75,12 @@ theGame.prototype = {
   createCounter: function () {
     // gold should be numeric, not range...
 
-    this.gold = new RangeDisplay(100, 2000, this.game)
+    this.gold = new NumericDisplay(100, 2000, this.game)
     this.gold.setText(20, 20, 'gold: ')
-    this.gold.setRangePos(70, 10, 32 * 3, 20)
+    this.gold.setRangePos(200, 10, 32 * 3, 20)
     this.magie = new RangeDisplay(0, 2000, this.game)
-    this.magie.setText(7 * 32, 20, 'magie: ')
-    this.magie.setRangePos(95, 10, 32 * 3, 20)
+    this.magie.setText(240, 20, 'magie: ')
+    this.magie.setRangePos(100, 10, 32 * 3, 20)
     this.taint = new RangeDisplay(0, 2000, this.game)
     this.taint.setText(430, 20, 'taint: ')
     this.taint.setRangePos(80, 10, 32 * 3, 20)
