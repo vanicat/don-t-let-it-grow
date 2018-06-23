@@ -10,7 +10,7 @@
     <script src="src/theGame.js"></script>
     <script>
     var main = function () {
-      var game = new Phaser.Game(window.innerWidth*.9, window.innerHeight*.9, Phaser.AUTO, 'game', null)
+      var game = new Phaser.Game(window.innerWidth*.95, window.innerHeight*.95, Phaser.AUTO, 'game', null)
       game.state.add('Boot', boot)
       game.state.add('Preload', preload)
       game.state.add('TheGame', theGame)
