@@ -28,7 +28,11 @@ on peut
 - event
     - famine
     - réfugié
-    - 
+- ressource
+    - argent
+    - magie
+    - taint
+    - plant
 ## action!
 - loosing time (6AM-9AM) trying to understand phaser 3:
     - should do it between jam!
