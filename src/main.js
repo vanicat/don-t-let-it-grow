@@ -7,7 +7,6 @@ var config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 200 }
     }
   },
   scene: {
@@ -16,6 +15,7 @@ var config = {
   }
 }
 
+/* exported game */
 var game = new Phaser.Game(config)
 
 function preload () {
