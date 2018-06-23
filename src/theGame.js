@@ -35,7 +35,6 @@ theGame.prototype = {
     // TODO: set position relatively to the window
 
     // for movement based on the mouse
-
     this.leftRectangle = new Phaser.Rectangle(0, 0, CAMERA_MOVE, this.game.camera.height)
     this.rightRectangle = new Phaser.Rectangle(this.game.camera.width - CAMERA_MOVE, 0, CAMERA_MOVE, this.game.camera.height)
     this.topRectangle = new Phaser.Rectangle(0, 0, this.game.camera.width, CAMERA_MOVE)
@@ -49,7 +48,6 @@ theGame.prototype = {
     this.plant.draw()
 
     // movement based on mouse
-
     this.moveCamera()
   },
 
