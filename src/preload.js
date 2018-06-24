@@ -15,6 +15,7 @@ preload.prototype = {
     this.load.image('grass', 'assets/grass.png')
     this.load.image('boom', 'assets/boom.png')
     this.load.image('bomb', 'assets/bomb.png')
+    this.load.image('temple', 'assets/temple.png')
     this.load.spritesheet('badlands', 'assets/badlands-sheet.png', 64, 64)
   },
 

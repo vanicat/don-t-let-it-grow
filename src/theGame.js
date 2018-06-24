@@ -1,10 +1,12 @@
 /* global Phaser RangeDisplay NumericDisplay ToolBox checkGroupOverlap snapToGrid changeHealth */
 const CAMERA_MOVE = 40
 
+const TEMPLE_CLEAN = 10
 const GOLD_BY_HALL = 4
 const MAGIC_BY_SHOP = 10
 const HALL_COST = 400
 const SHOP_COST = 200
+const TEMPLE_COST = 200
 const FARM_COST = 100
 const STARTING_MAGIC = 399
 const STARTING_GOLD = 399
@@ -48,6 +50,7 @@ theGame.prototype = {
     this.halls = this.add.group()
     this.farms = this.add.group()
     this.magikShops = this.add.group()
+    this.temples = this.add.group()
     this.placement = this.add.group()
 
     this.plants = this.add.group()
@@ -97,7 +100,10 @@ theGame.prototype = {
   updateCounter: function () {
     var moreGold = this.halls.countLiving() * GOLD_BY_HALL
     var moreMagie = this.magikShops.countLiving() * MAGIC_BY_SHOP
+    var lessTaint = this.temples.countLiving() * TEMPLE_CLEAN
     var morePlant = this.taint.value
+
+    this.taint.value -= lessTaint * this.time.physicsElapsed
 
     this.gold.addNoLimit(moreGold * this.time.physicsElapsed)
     this.magie.add(moreMagie * this.time.physicsElapsed)
@@ -229,6 +235,14 @@ theGame.prototype = {
       return true
     } else {
       return this.payByMagic(amount)
+    }
+  },
+
+  payingByGold: function (amount) {
+    if (this.gold.pay(amount)) {
+      return true
+    } else {
+      this.message('not enough gold')
     }
   },
 
@@ -440,5 +454,16 @@ theGame.prototype = {
   },
 
   foundTemple: function () {
+    this.message('Ask the god, they may have a solution')
+    this.tools.addButton('temple', this.addTemple, 'cleaning the taint for gold')
+  },
+
+  addTemple: function () {
+    if (this.placement.length === 0 && this.payingByGold(TEMPLE_COST)) {
+      var temple = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'temple')
+      temple.onPlacement = function () {}
+
+      this.buildingPlacement(temple, this.temples)
+    }
   }
 }
