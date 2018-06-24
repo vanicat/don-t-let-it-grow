@@ -25,7 +25,7 @@ theGame.prototype = {
     this.bottomRectangle = new Phaser.Rectangle(0, this.camera.height - CAMERA_MOVE, this.camera.width, CAMERA_MOVE)
 
     this.tools = new ToolBox(this, 32, 128)
-    this.tools.addButton('hall', function () {})
+    this.tools.addButton('hall', this.addHall)
     this.tools.addButton('farm', function () {})
     this.tools.addButton('magicshop', function () {})
     this.tools.addButton('search', function () {})
@@ -33,6 +33,11 @@ theGame.prototype = {
     this.halls = this.add.group()
     this.farms = this.add.group()
     this.magikShops = this.add.group()
+    this.placement = this.add.group()
+    this.buildings = this.add.group()
+    this.buildings.addChild(this.halls)
+    this.buildings.addChild(this.farms)
+    this.buildings.addChild(this.magikShops)
   },
 
   update: function () {
@@ -43,6 +48,18 @@ theGame.prototype = {
 
     // movement based on mouse
     this.moveCamera()
+
+    // moving placement building
+    if (this.placement.length > 0) {
+      this.moveBuilding()
+    }
+
+    //
+  },
+
+  moveBuilding: function () {
+    this.placement.setAll('x', this.input.activePointer.worldX)
+    this.placement.setAll('y', this.input.activePointer.worldY)
   },
 
   moveCamera: function () {
@@ -91,5 +108,35 @@ theGame.prototype = {
     this.plant.setText(600, 20, 'new plant: ')
     this.plant.setRangePos(150, 10, 32 * 3, 20)
     this.plant.hide()
+  },
+
+  addHall: function () {
+    if (this.placement.length === 0) {
+      var hall = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'hall')
+      hall.onPlacement = function () {}
+
+      this.buildingPlacement(hall, this.halls)
+    }
+  },
+
+  buildingPlacement: function (sprite, buildingGroup) {
+    this.placement.add(sprite)
+    sprite.anchor.setTo(0.5, 0.5)
+
+    var game = this
+
+    sprite.inputEnabled = true
+
+    sprite.events.onInputDown.add(
+      function () {
+        buildingGroup.add(sprite)
+        game.placement.remove(sprite)
+
+        sprite.onPlacement()
+      })
+
+    sprite.onCancel = function () {
+      game.placement.remove(sprite)
+    }
   }
 }
