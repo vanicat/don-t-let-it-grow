@@ -2,9 +2,9 @@
 const CAMERA_MOVE = 40
 
 const GOLD_BY_HALL = 4
-const MAGIC_BY_SHOP = 20
+const MAGIC_BY_SHOP = 10
 const HALL_COST = 400
-const SHOP_COST = 400
+const SHOP_COST = 200
 const FARM_COST = 100
 const STARTING_MAGIC = 400
 const STARTING_GOLD = 400
