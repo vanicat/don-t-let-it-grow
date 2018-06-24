@@ -67,6 +67,8 @@ theGame.prototype = {
       { font: '32px Arial', fill: '#ffffff', align: 'center' })
     this.mainTooltip.text.setShadow(3, 3)
     this.mainTooltip.addChild(this.mainTooltip.text)
+
+    this.research = {}
   },
 
   update: function () {
@@ -297,6 +299,21 @@ theGame.prototype = {
 
   newPlant: function (position) {
     snapToGrid(position, 64)
+
+    if (this.plants.length === 0) {
+      this.message('A strange plant just sprout near the village')
+    }
+    if (this.plants.length === 10 ) {
+      this.message('there is a lot of the strange plant, we shoud research it')
+      this.research['taint'] = { 
+        message: 'something make this plant grow,\nlet\'s look for it',
+        time: 2,
+        cost: 400,
+        onFound: this.foundTaint
+      }
+      this.updateSearch()
+    }
+
     if (checkGroupOverlap(this.onGround, position.x, position.y)) {
       // TODO: we are on something
       var neigbour = this.plants.getClosestTo(position)
