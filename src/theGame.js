@@ -179,9 +179,12 @@ theGame.prototype = {
 
     sprite.events.onInputDown.add(
       function () {
-        if (!checkGroupOverlap(game.buildings, sprite)) {
+        if (!checkGroupOverlap(game.buildings, sprite.x, sprite.y)) {
           buildingGroup.add(sprite)
           game.placement.remove(sprite)
+
+          sprite.x = Math.round(sprite.x / 64) * 64
+          sprite.y = Math.round(sprite.y / 64) * 64
 
           sprite.onPlacement()
         }
