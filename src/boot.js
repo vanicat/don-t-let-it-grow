@@ -1,5 +1,4 @@
 /* global Phaser */
-/* exported boot goFullscreen */
 
 var boot = function (game) {
 }
@@ -12,7 +11,6 @@ boot.prototype = {
 
     var scale = this.game.scale
     window.onresize = function () {
-      console.log('resize')
       scale.setGameSize(window.innerWidth * 0.95, window.innerHeight * 0.95)
       return false
     }
@@ -30,3 +28,5 @@ boot.prototype = {
     }
   }
 }
+
+/* exported boot goFullscreen */
