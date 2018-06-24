@@ -39,7 +39,7 @@ theGame.prototype = {
     this.tools.addButton('hall', this.addHall, 'a hall, for getting gold\nCost: ' + HALL_COST + ' gold or some magic')
     this.tools.addButton('farm', this.addFarm, 'a Farm, for getting food\ncost: ' + FARM_COST + ' gold or some magic')
     this.tools.addButton('magicshop', this.addMagicShop, 'a Magic Shop, for getting magic\ncost: ' + SHOP_COST + ' gold or some magic')
-    this.tools.addButton('search', function () {}, 'Research')
+    this.tools.addButton('search', this.research, 'Research')
     this.tools.button('search').alpha = 0.5
 
     this.okMagic = true
@@ -68,7 +68,7 @@ theGame.prototype = {
     this.mainTooltip.text.setShadow(3, 3)
     this.mainTooltip.addChild(this.mainTooltip.text)
 
-    this.research = {}
+    this.toBeFound = null
   },
 
   update: function () {
@@ -303,9 +303,9 @@ theGame.prototype = {
     if (this.plants.length === 0) {
       this.message('A strange plant just sprout near the village')
     }
-    if (this.plants.length === 10 ) {
+    if (this.plants.length === 10) {
       this.message('there is a lot of the strange plant, we shoud research it')
-      this.research['taint'] = { 
+      this.toBeFound = {
         message: 'something make this plant grow,\nlet\'s look for it',
         time: 2,
         cost: 400,
@@ -331,10 +331,38 @@ theGame.prototype = {
   },
 
   updateSearch: function () {
-    if (this.research.length === 0) {
-      this.tools.button('search').alpha = .5
-    } else {
+    if (this.toBeFound) {
       this.tools.button('search').alpha = 1
+    } else {
+      this.tools.button('search').alpha = 0.5
     }
+  },
+
+  research: function () {
+    if (this.toBeFound && this.paying(this.toBeFound.cost)) {
+      this.time.events.add(
+        Phaser.Timer.SECOND * this.toBeFound.time,
+        this.toBeFound.onFound,
+        this
+      )
+      this.toBeFound = null
+      this.updateSearch()
+    }
+  },
+
+  foundTaint: function () {
+    this.message('there is a taint, or something, we will investigate more,\nmeanwill, let search how to blow the plant')
+    this.taint.show()
+
+    this.toBeFound = {
+      message: 'Let blow plants',
+      time: 1,
+      cost: 200,
+      onFound: this.foundBlow
+    }
+  },
+
+  foundBlow: function () {
+
   }
 }
