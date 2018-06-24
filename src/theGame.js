@@ -49,6 +49,9 @@ theGame.prototype = {
     this.placement = this.add.group()
 
     this.onGround = this.add.group()
+    this.onGround.add(this.halls)
+    this.onGround.add(this.farms)
+    this.onGround.add(this.magikShops)
   },
 
   update: function () {
@@ -81,14 +84,13 @@ theGame.prototype = {
         y: this.world.randomY
       }
       snapToGrid(position, 64)
-      var grass = this.add.sprite(position.x, position.y, 'badlands')
 
-      var neigbour = this.onGround.getClosestTo(grass)
-
-      if (Phaser.Rectangle.contains(neigbour.getBounds(), position.x, position.y)) {
+      if (checkGroupOverlap(this.onGround, position.x, position.y)) {
         // TODO: we are on something
-        console.log('TODO')
+        var neigbour = this.onGround.getClosestTo(position)
+        console.log('TODO', neigbour.name)
       } else {
+        var grass = this.add.sprite(position.x, position.y, 'badlands')
         grass.anchor.setTo(0.5, 0.5)
         this.onGround.add(grass)
         this.world.bringToTop(grass)
@@ -203,7 +205,6 @@ theGame.prototype = {
       function () {
         if (!checkGroupOverlap(game.onGround, sprite.x, sprite.y)) {
           buildingGroup.add(sprite)
-          game.onGround.add(sprite)
           game.placement.remove(sprite)
 
           sprite.onPlacement()
