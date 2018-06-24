@@ -140,6 +140,7 @@ theGame.prototype = {
   buildingPlacement: function (sprite, buildingGroup) {
     this.placement.add(sprite)
     sprite.anchor.setTo(0.5, 0.5)
+    this.world.bringToTop(this.placement)
 
     var game = this
 
