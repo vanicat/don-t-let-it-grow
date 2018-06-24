@@ -72,7 +72,7 @@ theGame.prototype = {
   updateCounter: function () {
     var moreGold = this.halls.length * GOLD_BY_HALL
     var moreMagie = this.magikShops.length * MAGIC_BY_SHOP
-    var morePlant = this.taint
+    var morePlant = this.taint.value
 
     this.gold.addNoLimit(moreGold * this.time.physicsElapsed)
     this.magie.add(moreMagie * this.time.physicsElapsed)
@@ -198,7 +198,7 @@ theGame.prototype = {
     } else if (this.okMagic) {
       var byMagic = this.magie.pay(amount)
       if (byMagic) {
-        this.taint.add(byMagic) // TODO:when taint is max, do something.
+        this.taint.add(amount) // TODO:when taint is max, do something.
       } else {
         this.message('not enough gold nor magic')
       }
