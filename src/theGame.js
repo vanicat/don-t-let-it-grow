@@ -83,6 +83,14 @@ theGame.prototype = {
     // movement based on mouse
     this.moveCamera()
 
+    if (this.taint.value <= 0) {
+      this.message('we reversed the taint')
+    }
+
+    if (this.taint.isMax()) {
+      this.message('the taint take over')
+    }
+
     // moving placement building
     if (this.placement.length > 0) {
       this.moveBuilding()
