@@ -104,8 +104,8 @@ theGame.prototype = {
 
   moveBuilding: function () {
     var position = {
-      x: this.input.activePointer.worldX,
-      y: this.input.activePointer.worldY
+      x: this.input.activePointer.worldX - 32,
+      y: this.input.activePointer.worldY - 32
     }
     snapToGrid(position, 64)
     this.placement.setAll('x', position.x)
