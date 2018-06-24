@@ -155,7 +155,7 @@ theGame.prototype = {
     this.magie.setText(240, 20, 'magie: ')
     this.magie.setRangePos(100, 10, 32 * 3, 20)
 
-    this.taint = new RangeDisplay(0, 2000, this, this.hid)
+    this.taint = new RangeDisplay(0, 10000, this, this.hid)
     this.taint.setText(430, 20, 'taint: ')
     this.taint.setRangePos(80, 10, 32 * 3, 20)
     this.taint.hide()
