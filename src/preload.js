@@ -13,6 +13,8 @@ preload.prototype = {
     this.load.image('magicshop', 'assets/magicshop.png')
     this.load.image('search', 'assets/search.png')
     this.load.image('grass', 'assets/grass.png')
+    this.load.image('boom', 'assets/boom.png')
+    this.load.image('bomb', 'assets/bomb.png')
     this.load.spritesheet('badlands', 'assets/badlands-sheet.png', 64, 64)
   },
 

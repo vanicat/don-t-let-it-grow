@@ -57,6 +57,8 @@ theGame.prototype = {
     this.onGround.add(this.magikShops)
     this.onGround.add(this.plants)
 
+    this.bombGroup = this.add.group()
+
     this.mainTooltip = this.add.graphics(300, 100)
     this.mainTooltip.visible = true
     // this.mainTooltip.beginFill(0xA0A0A0)
@@ -85,6 +87,8 @@ theGame.prototype = {
     this.updateCounter()
 
     this.world.bringToTop(this.hid)
+
+    this.bombGroup.callAll('myUpdate')
   },
 
   updateCounter: function () {
@@ -363,6 +367,28 @@ theGame.prototype = {
   },
 
   foundBlow: function () {
+    this.message('nothing that can be fixed by some magic\nLet blow this')
+    this.nblow = 0
+    this.tools.addButton('boom', this.boom, 'Blowing stuff with magic')
+  },
 
+  boom: function () {
+    var bomb = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'bomb')
+
+    bomb.anchor.setTo(0.5, 0.5)
+
+    this.physics.enable(bomb, Phaser.Physics.ARCADE)
+    var game = this
+    bomb.myUpdate = function () {
+      game.physics.arcade.moveToPointer(bomb, 60, game.input.activePointer, 500)
+    }
+
+    this.bombGroup.add(bomb)
+    bomb.inputEnabled = true
+
+    bomb.events.onInputDown.add(function () {
+
+      bomb.kill()
+    })
   }
 }
