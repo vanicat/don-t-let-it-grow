@@ -6,7 +6,8 @@
         {
             "label": "http server",
             "type": "shell",
-            "command": "./server-http"
+            "command": "./server-http",
+            "problemMatcher": []
         }
     ]
 }
