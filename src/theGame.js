@@ -60,6 +60,7 @@ theGame.prototype = {
 
     this.bombGroup = this.add.group()
     this.hadBomb = false
+    this.again = false
 
     this.mainTooltip = this.add.graphics(300, 100)
     this.mainTooltip.visible = true
@@ -314,8 +315,16 @@ theGame.prototype = {
       }
     }
     if (this.plants.length === 10) {
-      if (this.hadBomb) {
+      if (this.hadBomb && !this.again) {
+        this.again = true
         this.message('Its comming back faster\n we need to investigate further')
+        this.toBeFound = {
+          message: 'What cause the taint ?',
+          time: 10,
+          cost: 600,
+          onFound: this.foundCause
+        }
+        this.updateSearch()
       } else {
         this.message('there is a lot of the strange plant, we shoud research it')
         this.toBeFound = {
@@ -417,5 +426,19 @@ theGame.prototype = {
         bomb.kill()
       })
     }
+  },
+
+  foundCause: function () {
+    this.message('it is the magic that cause this\nlet\'s pray the god for a solution')
+    this.toBeFound = {
+      message: 'something make this plant grow,\nlet\'s look for it',
+      time: 10,
+      cost: 700,
+      onFound: this.foundTemple
+    }
+    this.updateSearch()
+  },
+
+  foundTemple: function () {
   }
 }
