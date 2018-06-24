@@ -191,7 +191,11 @@ theGame.prototype = {
     if (this.gold.pay(amount)) {
       return true
     } else if (this.okMagic) {
-      return this.magie.pay(amount)
+      var byMagic = this.magie.pay(amount)
+      if (byMagic) {
+        this.taint.add(byMagic) // TODO:when taint is max, do something.
+      }
+      return byMagic
     }
     this.message('you could pay by magic')
     return false
