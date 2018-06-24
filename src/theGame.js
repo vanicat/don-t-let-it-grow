@@ -19,6 +19,7 @@ theGame.prototype = {
   create: function () {
     console.log('starting game')
     this.add.tileSprite(0, 0, 1920, 1920, 'background')
+    this.add.tileSprite(0, 0, 1920, 1920, 'grass')
     this.world.setBounds(0, 0, 1920, 1920)
     this.cursors = this.input.keyboard.createCursorKeys()
 
@@ -194,10 +195,14 @@ theGame.prototype = {
       var byMagic = this.magie.pay(amount)
       if (byMagic) {
         this.taint.add(byMagic) // TODO:when taint is max, do something.
+      } else {
+        this.message('not enough gold nor magic')
       }
+
       return byMagic
+    } else {
+      this.message('you could pay by magic')
     }
-    this.message('you could pay by magic')
     return false
   },
 

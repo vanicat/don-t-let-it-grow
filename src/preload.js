@@ -12,6 +12,8 @@ preload.prototype = {
     this.load.image('farm', 'assets/farm.png')
     this.load.image('magicshop', 'assets/magicshop.png')
     this.load.image('search', 'assets/search.png')
+    this.load.image('grass', 'assets/grass.png')
+    this.load.image('badlands', 'assets/badlands.png')
   },
 
   create: function () {
