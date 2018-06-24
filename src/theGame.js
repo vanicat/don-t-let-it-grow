@@ -20,7 +20,7 @@ theGame.prototype = {
     console.log('starting game')
     this.add.tileSprite(0, 0, 1920, 1920, 'background')
     this.add.tileSprite(0, 0, 1920, 1920, 'grass')
-    this.world.setBounds(0, 0, 1920, 1920)
+    this.world.setBounds(0, 0, 1800, 768)
     this.cursors = this.input.keyboard.createCursorKeys()
 
     this.hid = this.add.group()
