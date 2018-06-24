@@ -1,4 +1,4 @@
-/* global Phaser RangeDisplay NumericDisplay ToolBox */
+/* global Phaser RangeDisplay NumericDisplay ToolBox checkGroupOverlap */
 const CAMERA_MOVE = 40
 
 var theGame = function (game) {
@@ -148,10 +148,12 @@ theGame.prototype = {
 
     sprite.events.onInputDown.add(
       function () {
-        buildingGroup.add(sprite)
-        game.placement.remove(sprite)
+        if (!checkGroupOverlap(game.buildings, sprite)) {
+          buildingGroup.add(sprite)
+          game.placement.remove(sprite)
 
-        sprite.onPlacement()
+          sprite.onPlacement()
+        }
       })
 
     sprite.onCancel = function () {
