@@ -1,4 +1,4 @@
-/* global Phaser RangeDisplay NumericDisplay ToolBox checkGroupOverlap snapToGrid */
+/* global Phaser RangeDisplay NumericDisplay ToolBox checkGroupOverlap snapToGrid changeHealth */
 const CAMERA_MOVE = 40
 
 const GOLD_BY_HALL = 4
@@ -275,16 +275,21 @@ theGame.prototype = {
     }
     if (spread) return
 
-    plant.health += 10
+    changeHealth(plant, 10)
   },
 
   newPlant: function (position) {
+    snapToGrid(position, 64)
     if (checkGroupOverlap(this.onGround, position.x, position.y)) {
       // TODO: we are on something
-      var neigbour = this.onGround.getClosestTo(position)
-      console.log('TODO', neigbour.name)
+      var neigbour = this.plants.getClosestTo(position)
+      if (neigbour && neigbour.x === position.x && neigbour.y === position.y) {
+        console.log('this is a plant')
+      }
     } else {
       var grass = this.add.sprite(position.x, position.y, 'badlands')
+      grass.health = 10
+      changeHealth(grass, 0)
       grass.anchor.setTo(0.5, 0.5)
       this.plants.add(grass)
       this.world.bringToTop(grass)
