@@ -8,6 +8,7 @@ const SHOP_COST = 200
 const FARM_COST = 100
 const STARTING_MAGIC = 399
 const STARTING_GOLD = 399
+const BLOW_POWER = 400
 
 var theGame = function (game) {
 }
@@ -58,6 +59,7 @@ theGame.prototype = {
     this.onGround.add(this.plants)
 
     this.bombGroup = this.add.group()
+    this.hadBomb = false
 
     this.mainTooltip = this.add.graphics(300, 100)
     this.mainTooltip.visible = true
@@ -370,6 +372,7 @@ theGame.prototype = {
     this.message('nothing that can be fixed by some magic\nLet blow this')
     this.nblow = 0
     this.tools.addButton('boom', this.boom, 'Blowing stuff with magic')
+    this.hadBomb = true
   },
 
   boom: function () {
@@ -387,7 +390,20 @@ theGame.prototype = {
     bomb.inputEnabled = true
 
     bomb.events.onInputDown.add(function () {
-
+      var callback = function (child, dist) {
+        return child.alive
+      }
+      snapToGrid(bomb, 64)
+      var power = BLOW_POWER
+      var plant = game.plants.getClosestTo(bomb, callback)
+      while (power > 0 && plant) {
+        power -= plant.health
+        plant.damage(power)
+        if (!plant.alive) {
+          game.plants.remove(plant)
+        }
+        plant = game.plants.getClosestTo(bomb, callback)
+      }
       bomb.kill()
     })
   }
