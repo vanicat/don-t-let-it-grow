@@ -1,6 +1,9 @@
 /* global Phaser RangeDisplay NumericDisplay ToolBox checkGroupOverlap */
 const CAMERA_MOVE = 40
 
+const HALL_COST = 400
+const SHOP_COST = 400
+const FARM_COST = 100
 var theGame = function (game) {
 }
 
@@ -25,10 +28,10 @@ theGame.prototype = {
     this.bottomRectangle = new Phaser.Rectangle(0, this.camera.height - CAMERA_MOVE, this.camera.width, CAMERA_MOVE)
 
     this.tools = new ToolBox(this, 32, 128)
-    this.tools.addButton('hall', this.addHall)
-    this.tools.addButton('farm', this.addFarm)
-    this.tools.addButton('magicshop', this.addMagicShop)
-    this.tools.addButton('search', function () {})
+    this.tools.addButton('hall', this.addHall, 'a hall, for getting gold\nCost: ' + HALL_COST + ' gold or some magic')
+    this.tools.addButton('farm', this.addFarm, 'a Farm, for getting food\ncost: ' + FARM_COST + ' gold or some magic')
+    this.tools.addButton('magicshop', this.addMagicShop, 'a Magic Shop, for getting magic\ncost: ' + SHOP_COST + ' gold or some magic')
+    this.tools.addButton('search', function () {}, 'Research')
 
     this.halls = this.add.group()
     this.farms = this.add.group()
