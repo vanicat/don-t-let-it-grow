@@ -79,23 +79,7 @@ theGame.prototype = {
     this.magie.add(moreMagie * this.time.physicsElapsed)
     // TODO:create plante when this maxout
     if (this.plant.add(morePlant * this.time.physicsElapsed)) {
-      var position = {
-        x: this.world.randomX,
-        y: this.world.randomY
-      }
-      snapToGrid(position, 64)
-
-      if (checkGroupOverlap(this.onGround, position.x, position.y)) {
-        // TODO: we are on something
-        var neigbour = this.onGround.getClosestTo(position)
-        console.log('TODO', neigbour.name)
-      } else {
-        var grass = this.add.sprite(position.x, position.y, 'badlands')
-        grass.anchor.setTo(0.5, 0.5)
-        this.onGround.add(grass)
-        this.world.bringToTop(grass)
-      }
-      this.plant.value = 0
+      this.plantGrow()
     }
 
     this.gold.draw()
@@ -236,5 +220,24 @@ theGame.prototype = {
 
   message: function (m) {
     console.log(m) // TODO:display it!
+  },
+
+  plantGrow: function () {
+    var position = {
+      x: this.world.randomX,
+      y: this.world.randomY
+    }
+    snapToGrid(position, 64)
+    if (checkGroupOverlap(this.onGround, position.x, position.y)) {
+    // TODO: we are on something
+      var neigbour = this.onGround.getClosestTo(position)
+      console.log('TODO', neigbour.name)
+    } else {
+      var grass = this.add.sprite(position.x, position.y, 'badlands')
+      grass.anchor.setTo(0.5, 0.5)
+      this.onGround.add(grass)
+      this.world.bringToTop(grass)
+    }
+    this.plant.value = 0
   }
 }
