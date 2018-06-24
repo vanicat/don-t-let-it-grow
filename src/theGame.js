@@ -307,7 +307,7 @@ theGame.prototype = {
       this.message('there is a lot of the strange plant, we shoud research it')
       this.toBeFound = {
         message: 'something make this plant grow,\nlet\'s look for it',
-        time: 2,
+        time: 5,
         cost: 400,
         onFound: this.foundTaint
       }
@@ -356,7 +356,7 @@ theGame.prototype = {
 
     this.toBeFound = {
       message: 'Let blow plants',
-      time: 1,
+      time: 4,
       cost: 200,
       onFound: this.foundBlow
     }
