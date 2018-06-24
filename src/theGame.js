@@ -33,6 +33,8 @@ theGame.prototype = {
     this.tools.addButton('magicshop', this.addMagicShop, 'a Magic Shop, for getting magic\ncost: ' + SHOP_COST + ' gold or some magic')
     this.tools.addButton('search', function () {}, 'Research')
 
+    this.okMagic = false
+
     this.halls = this.add.group()
     this.farms = this.add.group()
     this.magikShops = this.add.group()
@@ -114,7 +116,7 @@ theGame.prototype = {
   },
 
   addHall: function () {
-    if (this.placement.length === 0) {
+    if (this.placement.length === 0 && this.paying(HALL_COST)) {
       var hall = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'hall')
       hall.onPlacement = function () {}
 
@@ -123,7 +125,7 @@ theGame.prototype = {
   },
 
   addFarm: function () {
-    if (this.placement.length === 0) {
+    if (this.placement.length === 0 && this.paying(FARM_COST)) {
       var farm = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'farm')
       farm.onPlacement = function () {}
 
@@ -132,7 +134,7 @@ theGame.prototype = {
   },
 
   addMagicShop: function () {
-    if (this.placement.length === 0) {
+    if (this.placement.length === 0 && this.paying(SHOP_COST)) {
       var farm = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'magicshop')
       farm.onPlacement = function () {}
 
@@ -162,5 +164,19 @@ theGame.prototype = {
     sprite.onCancel = function () {
       game.placement.remove(sprite)
     }
+  },
+
+  paying: function (amount) {
+    if (this.gold.pay(amount)) {
+      return true
+    } else if (this.okMagic) {
+      return this.magie.pay(amount)
+    }
+    this.message('you could pay by magic')
+    return false
+  },
+
+  message: function (m) {
+    console.log(m) // TODO:display it!
   }
 }
