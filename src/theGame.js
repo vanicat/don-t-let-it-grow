@@ -26,8 +26,8 @@ theGame.prototype = {
 
     this.tools = new ToolBox(this, 32, 128)
     this.tools.addButton('hall', this.addHall)
-    this.tools.addButton('farm', function () {})
-    this.tools.addButton('magicshop', function () {})
+    this.tools.addButton('farm', this.addFarm)
+    this.tools.addButton('magicshop', this.addMagicShop)
     this.tools.addButton('search', function () {})
 
     this.halls = this.add.group()
@@ -116,6 +116,24 @@ theGame.prototype = {
       hall.onPlacement = function () {}
 
       this.buildingPlacement(hall, this.halls)
+    }
+  },
+
+  addFarm: function () {
+    if (this.placement.length === 0) {
+      var farm = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'farm')
+      farm.onPlacement = function () {}
+
+      this.buildingPlacement(farm, this.farms)
+    }
+  },
+
+  addMagicShop: function () {
+    if (this.placement.length === 0) {
+      var farm = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'magicshop')
+      farm.onPlacement = function () {}
+
+      this.buildingPlacement(farm, this.magikShops)
     }
   },
 
