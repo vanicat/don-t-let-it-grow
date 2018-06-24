@@ -283,12 +283,13 @@ theGame.prototype = {
     }
     if (spread) return
 
-    for (var n in [left, right, up, down]) {
-      if (n.health < plant.health) {
-        this.spreadPlant(n)
+    [left, right, up, down].forEach(function (snd) {
+      if (snd.health < plant.health) {
+        this.spreadPlant(snd)
         spread = true
       }
-    }
+    }, this)
+
     if (spread) return
 
     changeHealth(plant, 10)
