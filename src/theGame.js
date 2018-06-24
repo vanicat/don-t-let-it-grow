@@ -1,4 +1,4 @@
-/* global Phaser RangeDisplay NumericDisplay ToolBox checkGroupOverlap */
+/* global Phaser RangeDisplay NumericDisplay ToolBox checkGroupOverlap snapToGrid */
 const CAMERA_MOVE = 40
 
 const GOLD_BY_HALL = 4
@@ -47,10 +47,8 @@ theGame.prototype = {
     this.farms = this.add.group()
     this.magikShops = this.add.group()
     this.placement = this.add.group()
-    this.buildings = this.add.group()
-    this.buildings.addChild(this.halls)
-    this.buildings.addChild(this.farms)
-    this.buildings.addChild(this.magikShops)
+
+    this.onGround = this.add.group()
   },
 
   update: function () {
@@ -86,8 +84,13 @@ theGame.prototype = {
   },
 
   moveBuilding: function () {
-    this.placement.setAll('x', this.input.activePointer.worldX)
-    this.placement.setAll('y', this.input.activePointer.worldY)
+    var position = {
+      x: this.input.activePointer.worldX,
+      y: this.input.activePointer.worldY
+    }
+    snapToGrid(position, 64)
+    this.placement.setAll('x', position.x)
+    this.placement.setAll('y', position.y)
   },
 
   moveCamera: function () {
@@ -179,12 +182,10 @@ theGame.prototype = {
 
     sprite.events.onInputDown.add(
       function () {
-        if (!checkGroupOverlap(game.buildings, sprite.x, sprite.y)) {
+        if (!checkGroupOverlap(game.onGround, sprite.x, sprite.y)) {
           buildingGroup.add(sprite)
+          game.onGround.add(sprite)
           game.placement.remove(sprite)
-
-          sprite.x = Math.round(sprite.x / 64) * 64
-          sprite.y = Math.round(sprite.y / 64) * 64
 
           sprite.onPlacement()
         }
