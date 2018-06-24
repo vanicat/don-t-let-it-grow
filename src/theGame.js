@@ -1,9 +1,14 @@
 /* global Phaser RangeDisplay NumericDisplay ToolBox checkGroupOverlap */
 const CAMERA_MOVE = 40
 
+const GOLD_BY_HALL = 4
+const MAGIC_BY_SHOP = 20
 const HALL_COST = 400
 const SHOP_COST = 400
 const FARM_COST = 100
+const STARTING_MAGIC = 400
+const STARTING_GOLD = 400
+
 var theGame = function (game) {
 }
 
@@ -33,7 +38,7 @@ theGame.prototype = {
     this.tools.addButton('magicshop', this.addMagicShop, 'a Magic Shop, for getting magic\ncost: ' + SHOP_COST + ' gold or some magic')
     this.tools.addButton('search', function () {}, 'Research')
 
-    this.okMagic = false
+    this.okMagic = true
 
     this.halls = this.add.group()
     this.farms = this.add.group()
@@ -46,11 +51,6 @@ theGame.prototype = {
   },
 
   update: function () {
-    this.gold.draw()
-    this.magie.draw()
-    this.taint.draw()
-    this.plant.draw()
-
     // movement based on mouse
     this.moveCamera()
 
@@ -59,7 +59,25 @@ theGame.prototype = {
       this.moveBuilding()
     }
 
-    //
+    // TODO: canceling production
+
+    this.updateCounter()
+  },
+
+  updateCounter: function () {
+    var moreGold = this.halls.length * GOLD_BY_HALL
+    var moreMagie = this.magikShops.length * MAGIC_BY_SHOP
+    var morePlant = this.taint
+
+    this.gold.addNoLimit(moreGold * this.time.physicsElapsed)
+    this.magie.add(moreMagie * this.time.physicsElapsed)
+    // TODO:create plante when this maxout
+    this.plant.add(morePlant * this.time.physicsElapsed)
+
+    this.gold.draw()
+    this.magie.draw()
+    this.taint.draw()
+    this.plant.draw()
   },
 
   moveBuilding: function () {
@@ -99,16 +117,19 @@ theGame.prototype = {
   createCounter: function () {
     // gold should be numeric, not range...
 
-    this.gold = new NumericDisplay(100, 2000, this)
+    this.gold = new NumericDisplay(STARTING_GOLD, 2000, this)
     this.gold.setText(20, 20, 'gold: ')
     this.gold.setRangePos(200, 10, 32 * 3, 20)
-    this.magie = new RangeDisplay(0, 2000, this)
+
+    this.magie = new RangeDisplay(STARTING_MAGIC, 5000, this)
     this.magie.setText(240, 20, 'magie: ')
     this.magie.setRangePos(100, 10, 32 * 3, 20)
+
     this.taint = new RangeDisplay(0, 2000, this)
     this.taint.setText(430, 20, 'taint: ')
     this.taint.setRangePos(80, 10, 32 * 3, 20)
     this.taint.hide()
+
     this.plant = new RangeDisplay(0, 2000, this)
     this.plant.setText(600, 20, 'new plant: ')
     this.plant.setRangePos(150, 10, 32 * 3, 20)
