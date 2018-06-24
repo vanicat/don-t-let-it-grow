@@ -1,1 +1,3 @@
 .vscode/launch.json
+lib/PhaseTips/fixedToCamera.js
+lib/PhaseTips/core.js
