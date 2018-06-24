@@ -226,19 +226,19 @@ theGame.prototype = {
   paying: function (amount) {
     if (this.gold.pay(amount)) {
       return true
-    } else if (this.okMagic) {
-      var byMagic = this.magie.pay(amount)
-      if (byMagic) {
-        this.taint.add(amount) // TODO:when taint is max, do something.
-      } else {
-        this.message('not enough gold nor magic')
-      }
-
-      return byMagic
     } else {
-      this.message('you could pay by magic')
+      return this.payByMagic(amount)
     }
-    return false
+  },
+
+  payByMagic: function (amount) {
+    var byMagic = this.magie.pay(amount)
+    if (byMagic) {
+      this.taint.add(amount) // TODO:when taint is max, do something.
+    } else {
+      this.message('not enough gold nor magic')
+    }
+    return byMagic
   },
 
   message: function (m) {
@@ -385,35 +385,37 @@ theGame.prototype = {
   },
 
   boom: function () {
-    var bomb = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'bomb')
+    if (this.payByMagic(400)) {
+      var bomb = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'bomb')
 
-    bomb.anchor.setTo(0.5, 0.5)
+      bomb.anchor.setTo(0.5, 0.5)
 
-    this.physics.enable(bomb, Phaser.Physics.ARCADE)
-    var game = this
-    bomb.myUpdate = function () {
-      game.physics.arcade.moveToPointer(bomb, 60, game.input.activePointer, 500)
-    }
-
-    this.bombGroup.add(bomb)
-    bomb.inputEnabled = true
-
-    bomb.events.onInputDown.add(function () {
-      var callback = function (child, dist) {
-        return child.alive
+      this.physics.enable(bomb, Phaser.Physics.ARCADE)
+      var game = this
+      bomb.myUpdate = function () {
+        game.physics.arcade.moveToPointer(bomb, 60, game.input.activePointer, 500)
       }
-      snapToGrid(bomb, 64)
-      var power = BLOW_POWER
-      var plant = game.plants.getClosestTo(bomb, callback)
-      while (power > 0 && plant) {
-        power -= plant.health
-        plant.damage(power)
-        if (!plant.alive) {
-          game.plants.remove(plant)
+
+      this.bombGroup.add(bomb)
+      bomb.inputEnabled = true
+
+      bomb.events.onInputDown.add(function () {
+        var callback = function (child, dist) {
+          return child.alive
         }
-        plant = game.plants.getClosestTo(bomb, callback)
-      }
-      bomb.kill()
-    })
+        snapToGrid(bomb, 64)
+        var power = BLOW_POWER
+        var plant = game.plants.getClosestTo(bomb, callback)
+        while (power > 0 && plant) {
+          power -= plant.health
+          plant.damage(power)
+          if (!plant.alive) {
+            game.plants.remove(plant)
+          }
+          plant = game.plants.getClosestTo(bomb, callback)
+        }
+        bomb.kill()
+      })
+    }
   }
 }
