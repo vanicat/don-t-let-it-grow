@@ -315,9 +315,9 @@ theGame.prototype = {
 
   updateSearch: function () {
     if (this.research.length === 0) {
-      this.tools('search').alpha = .5
+      this.tools.button('search').alpha = .5
     } else {
-      this.tools('search').alpha = 1
+      this.tools.button('search').alpha = 1
     }
   }
 }
