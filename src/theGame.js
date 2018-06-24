@@ -6,8 +6,8 @@ const MAGIC_BY_SHOP = 10
 const HALL_COST = 400
 const SHOP_COST = 200
 const FARM_COST = 100
-const STARTING_MAGIC = 400
-const STARTING_GOLD = 400
+const STARTING_MAGIC = 399
+const STARTING_GOLD = 399
 
 var theGame = function (game) {
 }
