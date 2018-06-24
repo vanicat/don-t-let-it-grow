@@ -94,8 +94,8 @@ theGame.prototype = {
   },
 
   updateCounter: function () {
-    var moreGold = this.halls.length * GOLD_BY_HALL
-    var moreMagie = this.magikShops.length * MAGIC_BY_SHOP
+    var moreGold = this.halls.countLiving() * GOLD_BY_HALL
+    var moreMagie = this.magikShops.countLiving() * MAGIC_BY_SHOP
     var morePlant = this.taint.value
 
     this.gold.addNoLimit(moreGold * this.time.physicsElapsed)
