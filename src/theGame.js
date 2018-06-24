@@ -23,6 +23,8 @@ theGame.prototype = {
     this.world.setBounds(0, 0, 1920, 1920)
     this.cursors = this.input.keyboard.createCursorKeys()
 
+    this.hid = this.add.group()
+
     this.createCounter()
 
     // TODO: set position relatively to the window
@@ -118,20 +120,20 @@ theGame.prototype = {
   createCounter: function () {
     // gold should be numeric, not range...
 
-    this.gold = new NumericDisplay(STARTING_GOLD, 2000, this)
+    this.gold = new NumericDisplay(STARTING_GOLD, 2000, this, this.hid)
     this.gold.setText(20, 20, 'gold: ')
     this.gold.setRangePos(200, 10, 32 * 3, 20)
 
-    this.magie = new RangeDisplay(STARTING_MAGIC, 5000, this)
+    this.magie = new RangeDisplay(STARTING_MAGIC, 5000, this, this.hid)
     this.magie.setText(240, 20, 'magie: ')
     this.magie.setRangePos(100, 10, 32 * 3, 20)
 
-    this.taint = new RangeDisplay(0, 2000, this)
+    this.taint = new RangeDisplay(0, 2000, this, this.hid)
     this.taint.setText(430, 20, 'taint: ')
     this.taint.setRangePos(80, 10, 32 * 3, 20)
     this.taint.hide()
 
-    this.plant = new RangeDisplay(0, 2000, this)
+    this.plant = new RangeDisplay(0, 2000, this, this.hid)
     this.plant.setText(600, 20, 'new plant: ')
     this.plant.setRangePos(150, 10, 32 * 3, 20)
     this.plant.hide()
