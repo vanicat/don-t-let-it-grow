@@ -56,6 +56,17 @@ theGame.prototype = {
     this.onGround.add(this.farms)
     this.onGround.add(this.magikShops)
     this.onGround.add(this.plants)
+
+    this.mainTooltip = this.add.graphics(300, 100)
+    this.mainTooltip.visible = true
+    // this.mainTooltip.beginFill(0xA0A0A0)
+    // this.mainTooltip.drawRect(0, 0, 500, 32)
+    // this.mainTooltip.endFill()
+
+    this.mainTooltip.text = this.game.add.text(0, 0, '',
+      { font: '32px Arial', fill: '#ffffff', align: 'center' })
+    this.mainTooltip.text.setShadow(3, 3)
+    this.mainTooltip.addChild(this.mainTooltip.text)
   },
 
   update: function () {
@@ -223,6 +234,10 @@ theGame.prototype = {
   },
 
   message: function (m) {
+    this.mainTooltip.text.text = m
+    this.mainTooltip.visible = true
+
+    this.time.events.add(Phaser.Timer.SECOND * 2, function () { this.mainTooltip.visible = false }, this)
     console.log(m) // TODO:display it!
   },
 
