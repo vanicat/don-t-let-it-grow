@@ -307,17 +307,25 @@ theGame.prototype = {
     snapToGrid(position, 64)
 
     if (this.plants.length === 0) {
-      this.message('A strange plant just sprout near the village')
+      if (this.hadBomb) {
+        this.message('The plant came back')
+      } else {
+        this.message('A strange plant just sprout near the village')
+      }
     }
     if (this.plants.length === 10) {
-      this.message('there is a lot of the strange plant, we shoud research it')
-      this.toBeFound = {
-        message: 'something make this plant grow,\nlet\'s look for it',
-        time: 5,
-        cost: 400,
-        onFound: this.foundTaint
+      if (this.hadBomb) {
+        this.message('Its comming back master\n we need to investigate further')
+      } else {
+        this.message('there is a lot of the strange plant, we shoud research it')
+        this.toBeFound = {
+          message: 'something make this plant grow,\nlet\'s look for it',
+          time: 5,
+          cost: 400,
+          onFound: this.foundTaint
+        }
+        this.updateSearch()
       }
-      this.updateSearch()
     }
 
     if (checkGroupOverlap(this.onGround, position.x, position.y)) {
