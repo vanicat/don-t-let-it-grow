@@ -75,7 +75,26 @@ theGame.prototype = {
     this.gold.addNoLimit(moreGold * this.time.physicsElapsed)
     this.magie.add(moreMagie * this.time.physicsElapsed)
     // TODO:create plante when this maxout
-    this.plant.add(morePlant * this.time.physicsElapsed)
+    if (this.plant.add(morePlant * this.time.physicsElapsed)) {
+      var position = {
+        x: this.world.randomX,
+        y: this.world.randomY
+      }
+      snapToGrid(position, 64)
+      var grass = this.add.sprite(position.x, position.y, 'badlands')
+
+      var neigbour = this.onGround.getClosestTo(grass)
+
+      if (Phaser.Rectangle.contains(neigbour.getBounds(), position.x, position.y)) {
+        // TODO: we are on something
+        console.log('TODO')
+      } else {
+        grass.anchor.setTo(0.5, 0.5)
+        this.onGround.add(grass)
+        this.world.bringToTop(grass)
+      }
+      this.plant.value = 0
+    }
 
     this.gold.draw()
     this.magie.draw()
