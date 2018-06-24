@@ -40,6 +40,7 @@ theGame.prototype = {
     this.tools.addButton('farm', this.addFarm, 'a Farm, for getting food\ncost: ' + FARM_COST + ' gold or some magic')
     this.tools.addButton('magicshop', this.addMagicShop, 'a Magic Shop, for getting magic\ncost: ' + SHOP_COST + ' gold or some magic')
     this.tools.addButton('search', function () {}, 'Research')
+    this.tools.button('search').alpha = 0.5
 
     this.okMagic = true
 
@@ -293,6 +294,14 @@ theGame.prototype = {
       grass.anchor.setTo(0.5, 0.5)
       this.plants.add(grass)
       this.world.bringToTop(grass)
+    }
+  },
+
+  updateSearch: function () {
+    if (this.research.length === 0) {
+      this.tools('search').alpha = .5
+    } else {
+      this.tools('search').alpha = 1
     }
   }
 }
