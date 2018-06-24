@@ -65,6 +65,8 @@ theGame.prototype = {
     // TODO: canceling production
 
     this.updateCounter()
+
+    this.world.bringToTop(this.hid)
   },
 
   updateCounter: function () {
