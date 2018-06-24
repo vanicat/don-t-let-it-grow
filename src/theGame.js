@@ -366,6 +366,7 @@ theGame.prototype = {
       cost: 200,
       onFound: this.foundBlow
     }
+    this.updateSearch()
   },
 
   foundBlow: function () {
