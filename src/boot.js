@@ -18,7 +18,7 @@ boot.prototype = {
 
   create: function () {
     console.log('booted')
-    this.physics.startSystem(Phaser.Physics.ARCADE);
+    this.physics.startSystem(Phaser.Physics.ARCADE)
 
     this.game.state.start('Preload')
 
