@@ -48,10 +48,13 @@ theGame.prototype = {
     this.magikShops = this.add.group()
     this.placement = this.add.group()
 
+    this.plants = this.add.group()
+
     this.onGround = this.add.group()
     this.onGround.add(this.halls)
     this.onGround.add(this.farms)
     this.onGround.add(this.magikShops)
+    this.onGround.add(this.plants)
   },
 
   update: function () {
@@ -223,21 +226,68 @@ theGame.prototype = {
   },
 
   plantGrow: function () {
-    var position = {
-      x: this.world.randomX,
-      y: this.world.randomY
+    if (Math.random() * (this.plants.length + 1) < 1) {
+      var position = {
+        x: this.world.randomX,
+        y: this.world.randomY
+      }
+
+      snapToGrid(position, 64)
+
+      this.newPlant(position)
+    } else {
+      var plant = this.plants.getRandom()
+
+      this.spreadPlant(plant)
     }
-    snapToGrid(position, 64)
+    this.plant.value = 0
+  },
+
+  spreadPlant: function (plant) {
+    var right = this.plants.getClosestTo({ x: plant.x + 60, y: plant.y })
+    var left = this.plants.getClosestTo({ x: plant.x - 60, y: plant.y })
+    var up = this.plants.getClosestTo({ x: plant.x, y: plant.y - 60 })
+    var down = this.plants.getClosestTo({ x: plant.x, y: plant.y + 60 })
+    var spread = false
+    if (left === plant) {
+      this.newPlant({ x: plant.x - 64, y: plant.y })
+      spread = true
+    }
+    if (right === plant) {
+      this.newPlant({ x: plant.x + 64, y: plant.y })
+      spread = true
+    }
+    if (up === plant) {
+      this.newPlant({ x: plant.x, y: plant.y - 64 })
+      spread = true
+    }
+    if (down === plant) {
+      this.newPlant({ x: plant.x, y: plant.y + 64 })
+      spread = true
+    }
+    if (spread) return
+
+    for (var n in [left, right, up, down]) {
+      if (n.health < plant.health) {
+        this.spreadPlant(n)
+        spread = true
+      }
+    }
+    if (spread) return
+
+    plant.health += 10
+  },
+
+  newPlant: function (position) {
     if (checkGroupOverlap(this.onGround, position.x, position.y)) {
-    // TODO: we are on something
+      // TODO: we are on something
       var neigbour = this.onGround.getClosestTo(position)
       console.log('TODO', neigbour.name)
     } else {
       var grass = this.add.sprite(position.x, position.y, 'badlands')
       grass.anchor.setTo(0.5, 0.5)
-      this.onGround.add(grass)
+      this.plants.add(grass)
       this.world.bringToTop(grass)
     }
-    this.plant.value = 0
   }
 }
