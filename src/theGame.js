@@ -315,7 +315,7 @@ theGame.prototype = {
     }
     if (this.plants.length === 10) {
       if (this.hadBomb) {
-        this.message('Its comming back master\n we need to investigate further')
+        this.message('Its comming back faster\n we need to investigate further')
       } else {
         this.message('there is a lot of the strange plant, we shoud research it')
         this.toBeFound = {
