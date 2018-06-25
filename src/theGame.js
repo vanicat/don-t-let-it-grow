@@ -1,4 +1,4 @@
-/* global Phaser RangeDisplay NumericDisplay ToolBox checkGroupOverlap snapToGrid changeHealth */
+/* global firstAt Phaser RangeDisplay NumericDisplay ToolBox checkGroupOverlap snapToGrid changeHealth */
 const CAMERA_MOVE = 40
 
 const TEMPLE_CLEAN = 10
@@ -291,24 +291,25 @@ theGame.prototype = {
   },
 
   spreadPlant: function (plant) {
-    var right = this.plants.getClosestTo({ x: plant.x + 60, y: plant.y })
-    var left = this.plants.getClosestTo({ x: plant.x - 60, y: plant.y })
-    var up = this.plants.getClosestTo({ x: plant.x, y: plant.y - 60 })
-    var down = this.plants.getClosestTo({ x: plant.x, y: plant.y + 60 })
+    var right = firstAt(this.plants, plant.x + 60, plant.y)
+    var left = firstAt(this.plants, plant.x - 60, plant.y)
+    var up = firstAt(this.plants, plant.x, plant.y - 60)
+    var down = firstAt(this.plants, plant.x, plant.y + 60)
+
     var spread = false
-    if (left === plant) {
+    if (left === null) {
       this.newPlant({ x: plant.x - 64, y: plant.y })
       spread = true
     }
-    if (right === plant) {
+    if (right === null) {
       this.newPlant({ x: plant.x + 64, y: plant.y })
       spread = true
     }
-    if (up === plant) {
+    if (up === null) {
       this.newPlant({ x: plant.x, y: plant.y - 64 })
       spread = true
     }
-    if (down === plant) {
+    if (down === null) {
       this.newPlant({ x: plant.x, y: plant.y + 64 })
       spread = true
     }
