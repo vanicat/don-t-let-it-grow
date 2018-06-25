@@ -84,11 +84,11 @@ theGame.prototype = {
     this.moveCamera()
 
     if (this.taint.value <= 0) {
-      this.message('we reversed the taint')
+      this.state.start('Gameover', true, false, 'YOU DID IT, The taint has be cleaned, you win')
     }
 
     if (this.taint.isMax()) {
-      this.message('the taint take over')
+      this.state.start('Gameover', true, false, 'GAME OVER, The taint overcome everything')
     }
 
     // moving placement building

@@ -4,16 +4,20 @@ var gameover = function (game) {
 }
 
 gameover.prototype = {
+  init: function (title) {
+    this.title = title
+  },
+
   preload: function () {
   },
 
   create: function () {
     console.log('gameover')
-    this.game.add.text(this.world.centerX, this.world.centerY, 'GAME OVER',
+    this.game.add.text(this.world.centerX, this.world.centerY, this.title,
       { font: '90px Arial', fill: '#ffffff', align: 'center' })
     this.ui = this.add.group()
-    this.toolbox = new ToolBox(this, this.world.centerX, 30, this.ui)
-    this.toolbox.addButton('start again', this.game.state.start('theGame'), 'Start Again')
+    this.toolbox = new ToolBox(this, 32, 128, this.ui)
+    this.toolbox.addButton('startagain', function () { this.game.state.start('TheGame') }, 'Start Again')
   }
 }
 

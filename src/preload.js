@@ -8,6 +8,7 @@ preload.prototype = {
     this.load.setPreloadSprite(loadingBar)
     // should preload stuff
     this.load.image('background', 'assets/debug-grid-1920x1920.png')
+    this.load.image('startagain', 'assets/start again.png')
     this.load.image('hall', 'assets/hall.png')
     this.load.image('farm', 'assets/farm.png')
     this.load.image('magicshop', 'assets/magicshop.png')

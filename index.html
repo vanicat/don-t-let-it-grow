@@ -12,6 +12,7 @@
     <script src="lib/buttons.js"></script>
     <script src="src/boot.js"></script>
     <script src="src/preload.js"></script>
+    <script src="src/gameover.js"></script>
     <script src="src/theGame.js"></script>
     <script>
     var main = function () {
@@ -19,6 +20,7 @@
       game.state.add('Boot', boot)
       game.state.add('Preload', preload)
       game.state.add('TheGame', theGame)
+      game.state.add('Gameover', gameover)
       game.state.start('Boot')
     }
     </script>
