@@ -191,6 +191,7 @@ theGame.prototype = {
     if (this.placement.length === 0 && this.paying(HALL_COST)) {
       var hall = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'hall')
       hall.onPlacement = function () {}
+      hall.health = 100
 
       this.buildingPlacement(hall, this.halls)
     }
@@ -201,6 +202,8 @@ theGame.prototype = {
       var farm = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'farm')
       farm.onPlacement = function () {}
 
+      farm.health = 100
+
       this.buildingPlacement(farm, this.farms)
     }
   },
@@ -209,6 +212,8 @@ theGame.prototype = {
     if (this.placement.length === 0 && this.paying(SHOP_COST)) {
       var farm = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'magicshop')
       farm.onPlacement = function () {}
+
+      farm.health = 100
 
       this.buildingPlacement(farm, this.magikShops)
     }
@@ -362,12 +367,11 @@ theGame.prototype = {
       }
     }
 
-    if (checkGroupOverlap(this.onGround, position.x, position.y)) {
+    var spriteAtLocation = firstAt(this.onGround, position.x, position.y)
+    if (spriteAtLocation) {
       // TODO: we are on something
-      var neigbour = this.plants.getClosestTo(position)
-      if (neigbour && neigbour.x === position.x && neigbour.y === position.y) {
-        console.log('this is a plant')
-      }
+      spriteAtLocation.damage(10)
+      this.message('a building has taken damage')
     } else {
       var grass = this.add.sprite(position.x, position.y, 'badlands')
       grass.health = 10
@@ -473,7 +477,7 @@ theGame.prototype = {
     if (this.placement.length === 0 && this.payingByGold(TEMPLE_COST)) {
       var temple = this.add.sprite(this.input.activePointer.x, this.input.activePointer.y, 'temple')
       temple.onPlacement = function () {}
-
+      temple.health = 100
       this.buildingPlacement(temple, this.temples)
     }
   }
