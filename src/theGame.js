@@ -67,6 +67,7 @@ theGame.prototype = {
 
     this.mainTooltip = this.add.graphics(300, 100)
     this.mainTooltip.visible = true
+    this.mainTooltip.textList = []
     // this.mainTooltip.beginFill(0xA0A0A0)
     // this.mainTooltip.drawRect(0, 0, 500, 32)
     // this.mainTooltip.endFill()
@@ -270,10 +271,18 @@ theGame.prototype = {
   },
 
   message: function (m) {
-    this.mainTooltip.text.text = m
+    this.mainTooltip.textList.push(m)
+    this.mainTooltip.text.text = this.mainTooltip.textList.join('\n')
     this.mainTooltip.visible = true
 
-    this.time.events.add(Phaser.Timer.SECOND * 2, function () { this.mainTooltip.visible = false }, this)
+    this.time.events.add(Phaser.Timer.SECOND * 2, function () {
+      var len = this.mainTooltip.textList.shift()
+      if (len === 0) {
+        this.mainTooltip.visible = false
+      } else {
+        this.mainTooltip.text.text = this.mainTooltip.textList.join('\n')
+      }
+    }, this)
     console.log(m) // TODO:display it!
   },
 
