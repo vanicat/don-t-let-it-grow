@@ -108,21 +108,21 @@ theGame.prototype = {
 
   updateCounter: function () {
     var moreGold = this.halls.countLiving() * GOLD_BY_HALL
-    var moreMagie = this.magikShops.countLiving() * MAGIC_BY_SHOP
+    var moremagic = this.magikShops.countLiving() * MAGIC_BY_SHOP
     var lessTaint = this.temples.countLiving() * TEMPLE_CLEAN
     var morePlant = this.taint.value
 
     this.taint.value -= lessTaint * this.time.physicsElapsed
 
     this.gold.addNoLimit(moreGold * this.time.physicsElapsed)
-    this.magie.add(moreMagie * this.time.physicsElapsed)
+    this.magic.add(moremagic * this.time.physicsElapsed)
     // TODO:create plante when this maxout
     if (this.plant.add(morePlant * this.time.physicsElapsed)) {
       this.plantGrow()
     }
 
     this.gold.draw()
-    this.magie.draw()
+    this.magic.draw()
     this.taint.draw()
     this.plant.draw()
   },
@@ -173,9 +173,9 @@ theGame.prototype = {
     this.gold.setText(20, 20, 'gold: ')
     this.gold.setRangePos(200, 10, 32 * 3, 20)
 
-    this.magie = new RangeDisplay(STARTING_MAGIC, 5000, this, this.hid)
-    this.magie.setText(240, 20, 'magie: ')
-    this.magie.setRangePos(100, 10, 32 * 3, 20)
+    this.magic = new RangeDisplay(STARTING_MAGIC, 5000, this, this.hid)
+    this.magic.setText(240, 20, 'magic: ')
+    this.magic.setRangePos(100, 10, 32 * 3, 20)
 
     this.taint = new RangeDisplay(2, 10000, this, this.hid)
     this.taint.setText(430, 20, 'taint: ')
@@ -261,7 +261,7 @@ theGame.prototype = {
   },
 
   payByMagic: function (amount) {
-    var byMagic = this.magie.pay(amount)
+    var byMagic = this.magic.pay(amount)
     if (byMagic) {
       this.taint.add(amount) // TODO:when taint is max, do something.
     } else {
