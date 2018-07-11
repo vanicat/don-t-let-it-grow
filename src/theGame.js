@@ -84,12 +84,12 @@ theGame.prototype = {
     // movement based on mouse
     this.moveCamera()
 
-    if (this.taint.value <= 0) {
-      this.state.start('Gameover', true, false, 'YOU DID IT, The taint has be cleaned, you win')
+    if (this.corruption.value <= 0) {
+      this.state.start('Gameover', true, false, 'YOU DID IT, The corruption has be cleaned, you win')
     }
 
-    if (this.taint.isMax()) {
-      this.state.start('Gameover', true, false, 'GAME OVER, The taint overcome everything')
+    if (this.corruption.isMax()) {
+      this.state.start('Gameover', true, false, 'GAME OVER, The corruption overcome everything')
     }
 
     // moving placement building
@@ -104,15 +104,17 @@ theGame.prototype = {
     this.world.bringToTop(this.hid)
 
     this.bombGroup.callAll('myUpdate')
+
+    this.updateMessage(this.time.physicsElapsed)
   },
 
   updateCounter: function () {
     var moreGold = this.halls.countLiving() * GOLD_BY_HALL
     var moremagic = this.magikShops.countLiving() * MAGIC_BY_SHOP
-    var lessTaint = this.temples.countLiving() * TEMPLE_CLEAN
-    var morePlant = this.taint.value
+    var lesscorruption = this.temples.countLiving() * TEMPLE_CLEAN
+    var morePlant = this.corruption.value
 
-    this.taint.value -= lessTaint * this.time.physicsElapsed
+    this.corruption.value -= lesscorruption * this.time.physicsElapsed
 
     this.gold.addNoLimit(moreGold * this.time.physicsElapsed)
     this.magic.add(moremagic * this.time.physicsElapsed)
@@ -123,7 +125,7 @@ theGame.prototype = {
 
     this.gold.draw()
     this.magic.draw()
-    this.taint.draw()
+    this.corruption.draw()
     this.plant.draw()
   },
 
@@ -177,10 +179,10 @@ theGame.prototype = {
     this.magic.setText(240, 20, 'magic: ')
     this.magic.setRangePos(100, 10, 32 * 3, 20)
 
-    this.taint = new RangeDisplay(2, 10000, this, this.hid)
-    this.taint.setText(430, 20, 'taint: ')
-    this.taint.setRangePos(80, 10, 32 * 3, 20)
-    this.taint.hide()
+    this.corruption = new RangeDisplay(2, 10000, this, this.hid)
+    this.corruption.setText(430, 20, 'corruption: ')
+    this.corruption.setRangePos(80, 10, 32 * 3, 20)
+    this.corruption.hide()
 
     this.plant = new RangeDisplay(0, 2000, this, this.hid)
     this.plant.setText(600, 20, 'new plant: ')
@@ -263,7 +265,7 @@ theGame.prototype = {
   payByMagic: function (amount) {
     var byMagic = this.magic.pay(amount)
     if (byMagic) {
-      this.taint.add(amount) // TODO:when taint is max, do something.
+      this.corruption.add(amount)
     } else {
       this.message('not enough gold nor magic')
     }
@@ -357,7 +359,7 @@ theGame.prototype = {
           this.again = true
           this.message('Its comming back faster\n we need to investigate further')
           this.toBeFound = {
-            message: 'What cause the taint ?',
+            message: 'What cause the corruption ?',
             time: 10,
             cost: 600,
             onFound: this.foundCause
@@ -370,7 +372,7 @@ theGame.prototype = {
           message: 'something make this plant grow,\nlet\'s look for it',
           time: 5,
           cost: 400,
-          onFound: this.foundTaint
+          onFound: this.foundcorruption
         }
         this.updateSearch()
       }
@@ -411,9 +413,9 @@ theGame.prototype = {
     }
   },
 
-  foundTaint: function () {
-    this.message('there is a taint, or something, we will investigate more,\nmeanwill, let search how to blow the plant')
-    this.taint.show()
+  foundcorruption: function () {
+    this.message('there is a corruption, or something, we will investigate more,\nmeanwill, let search how to blow the plant')
+    this.corruption.show()
 
     this.toBeFound = {
       message: 'Let blow plants',
@@ -479,7 +481,7 @@ theGame.prototype = {
 
   foundTemple: function () {
     this.message('Ask the god, they may have a solution')
-    this.tools.addButton('temple', this.addTemple, 'cleaning the taint for gold')
+    this.tools.addButton('temple', this.addTemple, 'cleaning the corruption for gold')
   },
 
   addTemple: function () {
