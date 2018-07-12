@@ -107,6 +107,7 @@ theGame.prototype = {
     this.bombGroup.callAll('myUpdate')
 
     this.updateMessage(this.time.physicsElapsed)
+    this.updateSearch(this.time.physicsElapsed)
   },
 
   updateCounter: function () {
@@ -378,7 +379,6 @@ theGame.prototype = {
             cost: 600,
             onFound: this.foundCause
           }
-          this.updateSearch()
         }
       } else {
         this.message('there is a lot of the strange plant, we shoud research it')
@@ -388,7 +388,6 @@ theGame.prototype = {
           cost: 400,
           onFound: this.foundcorruption
         }
-        this.updateSearch()
       }
     }
 
@@ -423,7 +422,6 @@ theGame.prototype = {
         this
       )
       this.toBeFound = null
-      this.updateSearch()
     }
   },
 
@@ -437,7 +435,6 @@ theGame.prototype = {
       cost: 200,
       onFound: this.foundBlow
     }
-    this.updateSearch()
   },
 
   foundBlow: function () {
@@ -490,7 +487,6 @@ theGame.prototype = {
       cost: 700,
       onFound: this.foundTemple
     }
-    this.updateSearch()
   },
 
   foundTemple: function () {
