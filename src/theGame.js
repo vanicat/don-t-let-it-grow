@@ -68,6 +68,7 @@ theGame.prototype = {
     this.mainTooltip = this.add.graphics(300, 100)
     this.mainTooltip.visible = true
     this.mainTooltip.textList = []
+    this.mainTooltip.timeList = []
     // this.mainTooltip.beginFill(0xA0A0A0)
     // this.mainTooltip.drawRect(0, 0, 500, 32)
     // this.mainTooltip.endFill()
@@ -272,20 +273,29 @@ theGame.prototype = {
     return byMagic
   },
 
-  message: function (m) {
+  message: function (m, time) {
     this.mainTooltip.textList.push(m)
+    time = time || 5
+    this.mainTooltip.timeList.push(time)
     this.mainTooltip.text.text = this.mainTooltip.textList.join('\n')
     this.mainTooltip.visible = true
+  },
 
-    this.time.events.add(Phaser.Timer.SECOND * 2, function () {
-      var len = this.mainTooltip.textList.shift()
-      if (len === 0) {
-        this.mainTooltip.visible = false
-      } else {
-        this.mainTooltip.text.text = this.mainTooltip.textList.join('\n')
+  updateMessage: function (elpased) {
+    for (var i = 0; i < this.mainTooltip.timeList.length; i++) {
+      this.mainTooltip.timeList[i] -= elpased
+      if (this.mainTooltip.timeList[i] < 0) {
+        this.mainTooltip.timeList.splice(i, 1)
+        this.mainTooltip.textList.splice(i, 1)
+        i--
       }
-    }, this)
-    console.log(m) // TODO:display it!
+    }
+    var len = this.mainTooltip.textList.length
+    if (len === 0) {
+      this.mainTooltip.visible = false
+    } else {
+      this.mainTooltip.text.text = this.mainTooltip.textList.join('\n')
+    }
   },
 
   plantGrow: function () {
