@@ -40,7 +40,7 @@ theGame.prototype = {
 
     this.tools = new ToolBox(this, 32, 128, this.hid)
     this.tools.addButton('hall', this.addHall, 'a hall, for getting gold\nCost: ' + HALL_COST + ' gold or some magic')
-    this.tools.addButton('farm', this.addFarm, 'a Farm, for getting food\ncost: ' + FARM_COST + ' gold or some magic')
+    // this.tools.addButton('farm', this.addFarm, 'a Farm, for getting food\ncost: ' + FARM_COST + ' gold or some magic')
     this.tools.addButton('magicshop', this.addMagicShop, 'a Magic Shop, for getting magic\ncost: ' + SHOP_COST + ' gold or some magic')
     this.tools.addButton('search', this.research, 'Research')
     this.tools.button('search').alpha = 0.5
