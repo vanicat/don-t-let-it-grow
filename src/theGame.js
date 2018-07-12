@@ -185,6 +185,10 @@ theGame.prototype = {
     this.corruption.setRangePos(100)
     this.corruption.hide()
 
+    this.search = new RangeDisplay(0, 2000, this, this.hid)
+    this.search.setText(this.corruption.right + 10, 20, 'research: ')
+    this.search.setRangePos(100)
+
     this.plant = new RangeDisplay(0, 2000, this, this.hid)
     this.plant.setText(10, 20, 'new plant: ')
     this.plant.setRangePos(150)
