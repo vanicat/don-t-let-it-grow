@@ -174,20 +174,20 @@ theGame.prototype = {
 
     this.gold = new NumericDisplay(STARTING_GOLD, 2000, this, this.hid)
     this.gold.setText(20, 20, 'gold: ')
-    this.gold.setRangePos(200, 10, 32 * 3, 20)
+    this.gold.setRangePos(100)
 
     this.magic = new RangeDisplay(STARTING_MAGIC, 5000, this, this.hid)
-    this.magic.setText(240, 20, 'magic: ')
-    this.magic.setRangePos(100, 10, 32 * 3, 20)
+    this.magic.setText(this.gold.right + 10, 20, 'magic: ')
+    this.magic.setRangePos(100)
 
     this.corruption = new RangeDisplay(2, 10000, this, this.hid)
-    this.corruption.setText(430, 20, 'corruption: ')
-    this.corruption.setRangePos(80, 10, 32 * 3, 20)
+    this.corruption.setText(this.magic.right + 20, 20, 'corruption: ')
+    this.corruption.setRangePos(100)
     this.corruption.hide()
 
     this.plant = new RangeDisplay(0, 2000, this, this.hid)
-    this.plant.setText(600, 20, 'new plant: ')
-    this.plant.setRangePos(150, 10, 32 * 3, 20)
+    this.plant.setText(10, 20, 'new plant: ')
+    this.plant.setRangePos(150)
     this.plant.hide()
   },
 
