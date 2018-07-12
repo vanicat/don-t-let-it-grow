@@ -67,11 +67,9 @@ theGame.prototype = {
 
     this.mainTooltip = this.add.graphics(300, 100)
     this.mainTooltip.visible = true
+    this.mainTooltip.fixedToCamera = true
     this.mainTooltip.textList = []
     this.mainTooltip.timeList = []
-    // this.mainTooltip.beginFill(0xA0A0A0)
-    // this.mainTooltip.drawRect(0, 0, 500, 32)
-    // this.mainTooltip.endFill()
 
     this.mainTooltip.text = this.game.add.text(0, 0, '',
       { font: '32px Arial', fill: '#ffffff', align: 'center' })
