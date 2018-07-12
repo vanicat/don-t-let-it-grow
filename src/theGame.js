@@ -77,6 +77,7 @@ theGame.prototype = {
     this.mainTooltip.addChild(this.mainTooltip.text)
 
     this.toBeFound = null
+    this.searched = null
   },
 
   update: function () {
@@ -410,15 +411,21 @@ theGame.prototype = {
     } else {
       this.tools.button('search').alpha = 0.5
     }
+    if (this.searched) {
+      this.search.add(this.time.physicsElapsed)
+      if (this.search.isMax()) {
+        this.searched.onFound.call(this)
+        this.searched = null
+      }
+    }
+    this.search.draw()
   },
 
   research: function () {
     if (this.toBeFound && this.paying(this.toBeFound.cost)) {
-      this.time.events.add(
-        Phaser.Timer.SECOND * this.toBeFound.time,
-        this.toBeFound.onFound,
-        this
-      )
+      this.searched = this.toBeFound
+      this.search.max = this.toBeFound.time
+      this.search.value = 0
       this.toBeFound = null
     }
   },
